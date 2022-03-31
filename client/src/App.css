@@ -1,0 +1,103 @@
+.App {
+  text-align: center;
+  height: 100vh;
+}
+.headLineDiv {
+  background-color: rgb(43, 186, 226);
+}
+.headLine {
+  font-weight: 600;
+  font-size: xx-large;
+}
+.toolHeadLine {
+  font-weight: 600;
+  font-size: large;
+}
+.toolUploadLine {
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+  background-color: rgba(80, 217, 255, 0.449);
+}
+.inputFile {
+  width: 12%;
+}
+.filesInfoLineSingle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px black;
+  justify-content: space-around;
+}
+.fileNumber {
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tableFileInfo {
+  width: 14%;
+}
+.tableRow {
+  display: flex;
+  /* width: 100%; */
+  justify-content: space-around;
+}
+.tableCol {
+  text-align: start;
+  width: 50%;
+  padding: 1%;
+  font-size: small;
+}
+.previewDiv {
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  object-fit: contain;
+}
+.filePreview {
+  width: 60px;
+  height: 60px;
+}
+.toolLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 0.5%;
+  padding-top: 0.5%;
+  background-color: rgb(43, 186, 226);
+}
+.copyBtnDiv {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5%;
+  align-items: center;
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+}
+.copyBtnIcon {
+  border: 1px solid rgba(255, 255, 255, 0);
+  cursor: pointer;
+  border-radius: 15%;
+}
+.copyBtnTag {
+  position: absolute;
+  top: 120%;
+  width: 40px;
+  display: none;
+  font-size: x-small;
+  border-radius: 5px;
+  padding: 0.5%;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  cursor: default;
+}
+.copyBtnIcon:hover {
+  background-color: rgb(130, 215, 238);
+}
+.copyBtnIcon:hover + .copyBtnTag {
+  display: block;
+}

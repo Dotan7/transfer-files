@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body{
+       margin: 0%;
+      }
+      html {
+       text-align: center;
+       height: 100vh;
+       margin: 0%;
+      }
+      .headLineDiv {
+        background-color: rgb(43, 186, 226);
+      }
+      .headLine {
+        font-weight: 600;
+        font-size: xx-large;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-s
+      }
+      .toolHeadLine {
+        font-weight: 600;
+        font-size: large;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+      }
+      .toolTimeHeadLine{
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+      }
+      .toolUploadLine {
+        padding-top: 0.5%;
+        padding-bottom: 0.5%;
+        background-color: rgba(80, 217, 255, 0.449);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+      }
+      .inputFile {
+        width: 12%;
+      }
+      .filesInfoLineSingle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: solid 1px black;
+        justify-content: space-around;
+      }
+      .fileNumber {
+        font-size: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .tableFileInfo {
+        width: 14%;
+      }
+      .tableRow {
+        display: flex;
+        /* width: 100%; */
+        justify-content: space-around;
+      }
+      .tableCol {
+        text-align: start;
+        width: 50%;
+        padding: 1%;
+        font-size: small;
+      }
+      .previewDiv {
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 60px;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        object-fit: contain;
+      }
+      .filePreview {
+        width: 60px;
+        height: 60px;
+      }
+      .toolLink {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 0.5%;
+        padding-top: 0.5%;
+        background-color: rgb(43, 186, 226);
+      }
+      .downloadBtnDiv {
+        justify-content: center;
+        align-items: center;
+
+      }
+      .downloadAllBtnDiv {
+        justify-content: center;
+        align-items: center;
+        padding: 0.5%;
+      }
+      .downloadBtn {
+        text-decoration: none;
+        color: black;
+        justify-content: center;
+        align-items: center;
+        border: solid 1px black;
+        border-radius: 15px;
+        cursor: pointer;
+        padding: 3px;
+        background-color: rgba(80, 217, 255, 0.449);
+      }
+      .downloadAllBtn {
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+        justify-content: center;
+        align-items: center;
+        border: solid 1px black;
+        border-radius: 15px;
+        cursor: pointer;
+        padding: 3px;
+        background-color:white;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-s
+      }
+      .downloadAllBtn:hover {
+        background-color: rgba(132, 217, 240, 0.959);
+      }
+    </style>
+    <title>Dot - Download Page</title>
+  </head>
+ 
+  <body>
+    <div class="homeContainer">
+      <div class="headLineDiv">
+        <span class="headLine">Dot.Dev - Transfer Files Tool</span>
+        </br>
+        <span class="toolHeadLine">
+          Download Page
+        </span>
+        </br>
+        <span class="toolTimeHeadLine">
+          (The link will expire within 20 minutes)
+        </span>
+
+        <div class="downloadAllBtnDiv">
+          <button class="downloadAllBtn" onClick="{downLoadAllFilesFunction()}">
+            Download All Files
+          </button>
+        </div>
+      </div>
+
+      <div class="filesInfoLine" id="bodyDocDiv"></div>
+     
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.0/jszip.js"
+      integrity="sha512-cZ2ztolA9TjWl0iFiuGMm+FyZNSa780Kl5M+jvFQXI+cG8rs6coDWZaViuOgHmwd24Jgj5oM149XtZ8cArBwPQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"
+      integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      const JSZIP = new window.JSZip()
+      let filesToDownload
+      let bodyDoc = document.getElementById("bodyDocDiv")
+
+      let sorces = "from client to server"
+
+      const welcomeFetch = async () => {
+        console.log("welcome to downLoadPage")
+        const res = await fetch(window.location.href, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ sorces }),
+        })
+        filesToDownload = await res.json()
+        filesToDownload.files.map((file, index) => {
+          let bodyDocTemp = `
+         <div class="filesInfoLineSingle">
+           <div class="fileNumber">${index + 1}</div>
+           <div class="tableFileInfo">
+             <div class="tableRow">
+               <div class="tableCol">File Name:</div>
+               <div class="tableCol">${file.originalname}</div>
+             </div>
+             <div class="tableRow">
+               <div class="tableCol">File Size:</div>
+               <div class="tableCol">${file.size}</div>
+             </div>
+             <div class="tableRow">
+               <div class="tableCol">File Type:</div>
+               <div class="tableCol">${file.mimetype}</div>
+             </div>
+           </div>
+           <div class="previewDiv">
+             <img src='data:image/jpeg;base64,${filesToDownload.filesData[
+               index
+             ].toString("base64")}' class="filePreview"></img>
+           </div>
+           <div class="downloadBtnDiv">
+           <a class="downloadBtn" href="data:image/jpeg;base64,${filesToDownload.filesData[
+             index
+           ].toString("base64")}" download=${file.originalname}>Download</a>
+         </div>
+         </div>
+      `
+          bodyDoc.innerHTML += bodyDocTemp
+        })
+      }
+      const downLoadAllFilesFunction = async () => {
+        var zip = new JSZip()
+        filesToDownload.files.map((e, i) => {
+          zip.file(e.originalname, filesToDownload.filesData[i], {
+            base64: true,
+          })
+        })
+
+        zip.generateAsync({ type: "blob" }).then(function (content) {
+          saveAs(content, "zipFileFromDotDev.zip")
+        })
+      }
+
+      welcomeFetch()
+    </script>
+  </body>
+</html>
